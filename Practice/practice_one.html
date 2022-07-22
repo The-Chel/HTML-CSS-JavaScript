@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>To do list</title>
+  </head>
+  <body>
+    <input id="todo-title" type="text">
+    <button onclick="addTodo()">Add ToDo</button> <!-- <Tag>Content/lable</Tag> -->
+    
+    <input id="text_to_div" type="text">
+    <button id="div_from_box" onclick="makeDiv()">Make a div form textBox</button>
+
+    <div id="todo_list"></div>
+    <script>
+      function makeDiv() {
+        const textbox = document.getElementById('text_to_div');
+        const title = textbox.value;
+        const element = document.createElement("div");
+        element.innerText = title;
+        document.body.appendChild(element);
+      }
+
+      const todos = ["Get goods", "wash car", "Make dinner"];
+      
+      function addTodo() {
+        const textbox = document.getElementById('todo-title');
+        const title = textbox.value;
+        todos.push(title);
+        render();
+        textbox.value = null;
+      }
+      function render() {
+        document.getElementById('todo_list').innerHTML = "";
+        todos.forEach(function (todoTitle) {
+          const element = document.createElement("div");
+          element.innerText = todoTitle;
+          const todoList = document.getElementById('todo_list');
+          todoList.appendChild(element);
+
+        })
+      }
+      
+      render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <div id="for_elements"></div>
+        <div id="for_total"></div>
+        <script>
+            let my_cart = [];
+            let total = 0;
+            function createCart(array, object_in) {
+                array.push(object_in);
+            }
+            createCart(my_cart, {Apple: 5, Banana: 3})
+
+            // my_cart.forEach(element => {
+            //     let creation = document.createElement('div');
+            //     creation.innerText = 'biba';
+            //     let place_of_creation = document.getElementById('for_elements')
+            //     place_of_creation.appendChild(creation);
+            // });
+            function arrayToDivs(array) {
+                const properties = Object.keys(array[0]);
+                properties.forEach(element => {
+                    let creation_name = document.createElement('div');
+                    creation_name.innerText = element + ' ' + my_cart[0][element];
+
+                    let creation_button = document.createElement('button');
+                    creation_button.innerText = 'Add to cart';
+                    creation_button.style = 'margin: 0 12px;'
+                    creation_button.onclick = addPrice;
+                    creation_button.id = my_cart[0][element]
+                    creation_name.appendChild(creation_button);
+                    //CONTINUE
+
+                    let place_of_creation = document.getElementById('for_elements')
+                    place_of_creation.appendChild(creation_name);
+                });
+            }
+            function addPrice(event) {
+                console.log('Hello');
+                const event_id = event.target;
+                const button_id = event_id.id;
+                total = total + Number(button_id);
+                totalUpd();
+
+
+            }
+            function totalUpd() {
+                let creation_total = document.getElementById('for_total');
+                creation_total.innerHTML = '';
+                let creation_name = document.createElement('div');
+                    creation_name.innerText = '$' + total;
+                creation_total.appendChild(creation_name);
+            }
+            arrayToDivs(my_cart);
+
+        </script>
+    </body>
+</html>

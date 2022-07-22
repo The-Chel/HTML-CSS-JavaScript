@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+
+    <body>
+      <div>Receipt
+        <button onclick="display_receipt(all_items);">Click</button>
+        <div id="receipt_lines"></div>
+      </div>
+
+      <script>
+        const all_items = [];
+        function add_object_to_array(name, price, quantity) {
+          let object = {}
+          object.obj_name = name;
+          object.obj_price = Number(price);
+          object.obj_quantity = Number(quantity);
+          all_items.push(object);
+        }
+        add_object_to_array('Apple', 1, 5);
+        add_object_to_array('Egg', 0.2, 20);
+        add_object_to_array('Potato', 0.4, 100);
+        console.log(all_items);
+
+        
+        function price_summ(array) {
+          let summ = 0;
+          array.forEach((element, index) => {
+            summ = summ + array[index].obj_price * array[index].obj_quantity;
+          });
+          console.log(summ);
+        }
+        function display_receipt(array) {
+          document.getElementById('receipt_lines').innerHTML = '';
+          let display_inf;
+          let total_sum = 0;
+           
+          for (let i = 0; i < array.length; i++) {
+            display_inf = (array[i].obj_name +' $' + array[i].obj_price +' * ' + array[i].obj_quantity + ' = $' + (array[i].obj_price*array[i].obj_quantity));
+            const element = document.createElement("div");
+            element.innerText = display_inf;
+            const List = document.getElementById('receipt_lines');
+            List.appendChild(element);
+            total_sum = total_sum + array[i].obj_price*array[i].obj_quantity;
+          }
+          const element = document.createElement("div");
+          element.innerText = '$' + total_sum;
+          const List = document.getElementById('receipt_lines');
+          List.appendChild(element);
+        }
+
+
+      </script>
+    </body>
+</html>

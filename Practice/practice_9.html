@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>practice</title>
+  </head>
+  <body>
+    <button id="btn_apple" onclick="add_apple();">Apple</button>
+    <button id="btn_tomato" onclick="add_tomato();">Tomato</button>
+    <button id="btn_eggs" onclick="add_eggs();">Eggs</button>
+    <button id="btn_clear" onclick="clear_cart();">Clear</button>
+    <div id="cart">Cart is empty</div>
+    <script>
+      let full_list = [];
+      function clear_cart() {
+        let array_lenght = full_list.length
+        for (let i = 0; i < array_lenght; i++) {
+          full_list.pop();
+        }
+        document.getElementById('cart').innerHTML = "Cart is empty";
+      }
+
+      function add_apple() {
+        full_list.push("Apple");
+        render();
+      }
+      function add_tomato() {
+        full_list.push("Tomato");
+        render();
+      }
+      function add_eggs() {
+        full_list.push("Eggs");
+        render();
+      }
+
+      function render() {
+        document.getElementById('cart').innerHTML = "";
+        full_list.forEach(function (array_item) {
+          const element = document.createElement("div");
+          element.innerText = array_item;
+          const todoList = document.getElementById('cart');
+          todoList.appendChild(element);
+        })
+      }
+    </script>
+  </body>
+</html>

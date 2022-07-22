@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>practice</title>
+    </head>
+    <body>
+        <input id="input_field" type="text">
+        <button id="to_cm" onclick="covert_to_cm();">Convert to cm</button>
+        <button id="to_inch" onclick="covert_to_inches();">Convert to inches</button>
+        <div id="result">Result</div>
+    <script>
+        function covert_to_cm() {
+            const input_value = 0+get_input_value();
+            const conv_result = input_value * 2.54;
+            const result_field = document.getElementById('result');
+
+            if (isNaN(conv_result)) {
+                result_field.innerText = "Error: not a number inputed. Input a number";
+            } else {
+                result_field.innerText = conv_result;
+            }
+        }
+        function covert_to_inches() {
+            const input_value = 0+get_input_value();
+            const conv_result = input_value / 2.54;
+            const result_field = document.getElementById('result');
+
+            if (isNaN(conv_result)) {
+                result_field.innerText = "Error: not a number inputed. Input a number";
+            } else {
+                result_field.innerText = conv_result;
+            }
+            
+
+        }
+        function get_input_value() {
+            const field = document.getElementById('input_field');
+            const field_value = field.value;
+            return field_value;            
+        }
+    </script>
+    </body>
+</html>
