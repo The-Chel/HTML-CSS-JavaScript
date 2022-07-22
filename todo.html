@@ -9,7 +9,6 @@
     
     <div id="todo_list"></div>
     <script>
-
       // MODEL SECTION - DATA + MANAGING DATA
       // creates todo
       // deletes todo
@@ -73,15 +72,42 @@
         localStorage.setItem('todos', JSON.stringify(todos))
       }
 
-      function editTodo(todoId) {
+      function setEditing(todoId) {
           todos.forEach(function (todo) {
-          if (todo.id == todoId) {
+          if (todo.id === todoId) {
             todo.isEditing = true;
-            console.log(todo.isEditing);
           }
         });
+
         saveTodos();
       }
+      function replaceTodo(element_id , text_to_update, date_to_update) {
+        if (text_to_update != "" && date_to_update != "") {
+          todos.forEach(element => {
+            if (element.id === element_id) {
+              element.title = text_to_update;
+              element.dueDate = date_to_update;
+              element.isEditing = false;
+            }
+          });
+        } else if (text_to_update != "") {
+          todos.forEach(element => {
+            if (element.id === element_id) {
+              element.title = text_to_update;
+              element.isEditing = false;
+            }
+          });
+        } else if (date_to_update != "") {
+          todos.forEach(element => {
+            if (element.id === element_id) {
+              element.dueDate = date_to_update;
+              element.isEditing = false;
+            }
+          });
+        }
+          
+        saveTodos();
+        }
       
 
       // VIEW SECTION
@@ -98,7 +124,7 @@
             const edit_button = document.createElement('button');
             edit_button.innerText = 'Edit';
             edit_button.style = 'margin: 0 12px';
-            edit_button.onclick = updateTodo;
+            edit_button.onclick = onEdit;
             edit_button.dataset.todoId = todo.id;
             element.appendChild(edit_button);
 
@@ -126,13 +152,17 @@
 
             const newTodo = document.createElement('input');
             newTodo.type = 'text';
+            newTodo.dataset.todoId = todo.id;
 
             const dueDate = document.createElement('input');
             dueDate.type = 'date';
+            dueDate.dataset.todoId = todo.id;
 
             const update_button = document.createElement('button');
             const update_button_id = update_button.dataset.todoId;
             update_button.innerText = 'Update';
+            update_button.dataset.todoId = todo.id;
+            update_button.onclick = onUpdate;
 
             local_div.appendChild(newTodo);
             local_div.appendChild(dueDate);
@@ -145,12 +175,29 @@
 
       // CONTROLLERS SECTION
 
-      function updateTodo(event) {
+      function onEdit(event) {
         const edit_button = event.target;
 
         const todoId = '' + edit_button.dataset.todoId;
         
-        editTodo(todoId);
+        setEditing(todoId);
+        render();
+      }
+      function onUpdate(event) {
+        const update_button = event.target;
+        const element_id = update_button.dataset.todoId;
+
+        const field_selector = '[data-todo-id~="' + element_id + '"]'; //'[data-todo-id~="id3"]'
+        const full_line = document.querySelectorAll(field_selector);
+
+        const text_input = full_line[0];
+        const due_date = full_line[1];
+
+        const text_to_update = text_input.value;
+        const date_to_update = due_date.value;
+
+        replaceTodo(element_id, text_to_update, date_to_update);       
+        
         render();
       }
 
@@ -175,11 +222,13 @@
         
         render();
         textbox.value = null;
+        datePicker.value = null;
       }
 
       function deleteTodo(event) {
         const element_id = event.target;
         const in_object_id = element_id.id;
+
         removeTodo(in_object_id);
 
         render();
